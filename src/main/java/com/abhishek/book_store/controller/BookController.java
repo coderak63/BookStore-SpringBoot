@@ -44,7 +44,7 @@ public class BookController {
 	}
 	
 	
-	@PostMapping("add-book")
+	@PostMapping("books")
 	public ResponseEntity<Book> addBook(@Valid @RequestBody Book book)
 	{
 		book.setDate_created(new Date());
@@ -52,26 +52,26 @@ public class BookController {
 		return bookService.addBook(book);
 	}
 	
-	@PutMapping("edit-book/{id}")
+	@PutMapping("books/{id}")
 	public ResponseEntity<Book> editBook(@PathVariable(name = "id") String id, @RequestBody Book book)
 	{		
 		return bookService.editBook(id,book);
 	}
 	
-	@DeleteMapping("delete-book/{id}")
+	@DeleteMapping("books/{id}")
 	public ResponseEntity<HttpStatus> deleteBook(@PathVariable String id)
 	{	
 		return bookService.deleteBook(id);
 	}
 	
-	@DeleteMapping("delete-all-books")
+	@DeleteMapping("books")
 	public ResponseEntity<HttpStatus> deleteAllBooks()
 	{	
 		return bookService.deleteAllBooks();
 	}
 	
 
-	@PatchMapping("edit-book/{id}")
+	@PatchMapping("books/{id}")
 	public ResponseEntity<Book> editBookPatch(@PathVariable(name = "id") String id, @RequestBody Map<String, Object> fields)
 	{		
 		return bookService.editBookPatch(id,fields);

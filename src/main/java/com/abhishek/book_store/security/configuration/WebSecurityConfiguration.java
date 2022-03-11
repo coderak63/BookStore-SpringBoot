@@ -3,6 +3,7 @@ package com.abhishek.book_store.security.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -51,18 +52,19 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/register").permitAll()
-                .antMatchers("/api/books").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers("/api/books/**").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers("/api/add-book").hasAuthority("ADMIN")
-                .antMatchers("/api/edit-book/**").hasAuthority("ADMIN")
-                .antMatchers("/api/delete-book/**").hasAuthority("ADMIN")
-                .antMatchers("/api/delete-all-books").hasAuthority("ADMIN")
-                .antMatchers("/api/photos/**").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers("/api/photos/by-book-id/**").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers("/api/upload-photo").hasAuthority("ADMIN")
-                .antMatchers("/api/update-photo").hasAuthority("ADMIN")
+                .antMatchers("/api/login").permitAll()
+                .antMatchers("/api/register").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/books/**").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST,"/api/books").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/api/books/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE,"/api/books/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.PATCH,"/api/books/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET,"/api/photos/**").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.GET,"/api/photos/book-id/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/photos").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/api/photos").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET,"/api/ratings/**").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST,"/api/ratings").hasAnyAuthority("USER", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()

@@ -44,7 +44,7 @@ public class PhotoController {
 		      */
 	}
 	
-	@GetMapping("/photos/by-book-id/{book_id}")
+	@GetMapping("/photos/book-id/{book_id}")
 	public ResponseEntity<Photo> getPhotoByBookId(@PathVariable String book_id) {
 
 	    return photoService.getPhotoByBookId(book_id);
@@ -54,7 +54,7 @@ public class PhotoController {
 		      */
 	}
 	
-	@PostMapping("upload-photo")
+	@PostMapping("photos")
 	public ResponseEntity<Photo> handleFileUpload(@RequestParam("image") MultipartFile file,@RequestParam("book_id") String book_id,@RequestParam("title") String title) {
 
 	     try {
@@ -65,7 +65,7 @@ public class PhotoController {
 
 	   }
 	
-	@PutMapping("update-photo")
+	@PutMapping("photos")
 	public ResponseEntity<Photo> handleFileUpdate(@RequestParam("image") MultipartFile file,@RequestParam("book_id") String book_id,@RequestParam("title") String title) {
 
 	     return photoService.updateFile(file,book_id,title);
